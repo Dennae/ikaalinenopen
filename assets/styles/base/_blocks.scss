@@ -13,7 +13,12 @@
 
   .alignfull {
     @include alignfull;
-    @include spacing-l(margin-top, margin-bottom);
+    &.is-first-block {
+      margin-bottom: 0;
+    }
+    &.is-last-block {
+      margin-bottom: 0;
+    }
   }
 
   .alignwide {
