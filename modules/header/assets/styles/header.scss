@@ -5,6 +5,12 @@
 @import '../../../../assets/styles/utils.scss';
 
 .site-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  
   &__inner {
     @include wrap;
     padding-top: 1.25rem;
