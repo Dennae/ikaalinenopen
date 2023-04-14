@@ -17,7 +17,10 @@ class X_Header extends X_Component {
 
         <div class="site-header__branding">
           <a href="<?php echo esc_url(home_url('/')); ?>" class="site-header__title" rel="home" itemprop="headline">
-            <img class="site-header__logo" width="300" height="100" src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/logo.svg" loading="lazy" alt="<?php echo esc_attr(get_bloginfo('name')); ?>" />
+            <?php $header_logo = get_field('header_logo', 'option'); ?>
+            <?php if (!empty( $header_logo )) : ?>
+              <img class="site-header__logo" src="<?php echo esc_url($header_logo['url']); ?>" alt="<?php echo esc_attr($header_logo['alt']); ?>" />
+            <?php endif; ?>
           </a>
         </div>
 

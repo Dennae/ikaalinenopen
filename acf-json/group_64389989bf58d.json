@@ -1,0 +1,49 @@
+{
+    "key": "group_64389989bf58d",
+    "title": "Settings",
+    "fields": [
+        {
+            "key": "field_643899b7dc907",
+            "label": "Header Logo (Valikon logo)",
+            "name": "header_logo",
+            "type": "image",
+            "instructions": "Lataa kuva ylävalikkoon. Suositellut tiedostomuodot: .png, .jpg, .jpeg, .svg",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "full",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": ".png, .svg, .jpg, .jpeg, .svg"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "general-options"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1681431810
+}
