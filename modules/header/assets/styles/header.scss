@@ -65,9 +65,10 @@
   }
 
   &__logo {
-    width: 15rem;
+    border-radius: 100%;
+    width: 5rem;
     @include breakpoint($breakpoint-desktop-menu) {
-      width: 19rem;
+      width: 10rem;
     }
   }
 
