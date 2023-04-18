@@ -37,10 +37,10 @@ $breakpoint-media-text-desktop:  min-width 920px;
 
   &.alignfull {
 
-    & + .wp-block-acf-media-text.alignfull,
-    & + .wp-block-acf-background.alignfull {
-      @include negative-spacing-l(margin-top);
-    }
+    // & + .wp-block-acf-media-text.alignfull,
+    // & + .wp-block-acf-background.alignfull {
+    //   @include negative-spacing-l(margin-top);
+    // }
 
     .media-text {
 
@@ -118,6 +118,7 @@ $breakpoint-media-text-desktop:  min-width 920px;
       height: 100%;
       object-fit: cover;
       width: 100%;
+      aspect-ratio: 16/9;
     }
     &__video,
     &__image {
