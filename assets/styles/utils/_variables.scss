@@ -33,12 +33,26 @@
   ----------------------------------------------- */
 
   --font-weight-heavy:  900;
+  --font-weight-extrabold: 800;
   --font-weight-bold:   700;
+  --font-weight-semibold: 600;
+  --font-weight-medium: 500;
   --font-weight-normal: 400;
   --font-weight-light:  300;
 
-  --font-default: "Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
-  --font-title: var(--font-default);
+  // --font-default: "Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+  // --font-title: "Bebas Kai";
+  --font-title: "Bebas Kai";
+  --font-default: "Montserrat", sans-serif;
+
+  /* Import Fonts Locally
+----------------------------------------------- */
+
+  @font-face {
+    font-family:"Bebas Kai";
+    font-weight: 400;
+    src:url("../fonts/BebasKai_regular.woff2") format("woff2"),url("../fonts/BebasNeue_regular.woff") format("woff");
+  }
 
   /* Spacing
   ----------------------------------------------- */
