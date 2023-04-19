@@ -7,8 +7,8 @@
   /* Basic colors
   ----------------------------------------------- */
 
-  --color-primary:          #367EF7;
-  --color-primary-dark:     #2c67cc;
+  --color-primary:          #213F99;
+  --color-primary-dark:     #DA2028;
 
   --color-black:            hsl(0, 0%, 0%);
   --color-grey-dark:        hsl(0, 0%, 30%);
@@ -24,7 +24,7 @@
   --color-text-light:       hsl(0, 0%, 45%);
 
   --color-link:             var(--color-primary);
-  --color-border:           var(--color-grey-light);
+  --color-border:           var(--color-primary);
 
   --color-success:          #98C93C;
   --color-error:            #D95757;
