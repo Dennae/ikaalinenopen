@@ -23,11 +23,11 @@
   vertical-align: baseline;
   @if $style == 'solid' {
     background: var(--color-primary);
-    border: 1px solid var(--color-primary);
+    border: 2px solid var(--color-primary);
     color: var(--color-white);
   } @else if $style == 'outline' {
     background: transparent;
-    border: 1px solid;
+    border: 2px solid;
     color: var(--color-primary);
     .is-dark-mode & {
       border-color: var(--color-white);
@@ -50,6 +50,7 @@
     @if $style == 'solid' {
       background: var(--color-primary-dark);
       border-color: var(--color-primary-dark);
+      
     } @else if $style == 'outline' {
       border-color: var(--color-primary-dark);
       color: var(--color-primary-dark);
