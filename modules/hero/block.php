@@ -1,6 +1,6 @@
 <?php
 /**
- * ACF Block: Hero
+ * ACF Block: Hero Flexible
  *
  * @param array $block The block settings and attributes.
  * @param string $content The block inner HTML (empty).
@@ -8,40 +8,42 @@
  * @param (int|string) $post_id The post ID this block is saved to.
  */
 
-$allowed_content = [
+$align = isset($block['align']) ? $block['align'] : 'full';
+
+$allowed_blocks = [
   'core/heading',
   'core/paragraph',
+  'core/html',
+  'core/columns',
+  'core/image',
   'acf/buttons',
+  'acf/icon',
+  'acf/iframe',
 ];
 
 $placeholder_content = [
   ['core/heading', [
-    'placeholder' => __('Page title'),
-    'level'       => 1,
-    'value'       => !empty(get_the_title()) ? get_the_title() : '',
-  ]],
-  ['core/paragraph', [
-    'placeholder' => __('Write an excerpt (optional)'),
-  ]],
+    'placeholder' => __('Title'),
+    'level'       => 1
+  ]]
 ];
 
-$layout = get_field('layout') ? get_field('layout') : 'background';
 
-$args = [
-  'contents'          => '<InnerBlocks template="' . esc_attr(wp_json_encode($placeholder_content)) . '" allowedBlocks="' . esc_attr(wp_json_encode($allowed_content)) . '" />',
-  'fields'            => get_fields(),
-  'is_preview'        => $is_preview,
-];
+if ($is_preview) {
+  $contents = '<InnerBlocks allowedBlocks="' . esc_attr(wp_json_encode($allowed_blocks)) . '" template="' . esc_attr(wp_json_encode($placeholder_content)) . '" />';
+} else {
+  $contents = $content;
+
+}
 
 ?>
-<div class="wp-block-hero alignfull">
+<div class="wp-block-hero align<?php echo esc_attr($align); ?>">
   <?php
-    if ($layout === 'columns') {
-      X_Hero_Columns::render($args);
-    } elseif ($layout === 'stack') {
-      X_Hero_Stack::render($args);
-    } else {
-      X_Hero_Background::render($args);
-    }
+    X_Hero::render([
+      'contents'    => '<InnerBlocks allowedBlocks="' . esc_attr(wp_json_encode($allowed_blocks)) . '" template="' . esc_attr(wp_json_encode($placeholder_content)) . '" />',
+      'fields'      => get_fields(),
+      'width'       => $align,
+      'is_preview'  => $is_preview,
+    ]);
   ?>
 </div>

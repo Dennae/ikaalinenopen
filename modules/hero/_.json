@@ -1,35 +1,27 @@
 {
   "meta": {
-    "title": "hero",
-    "version": "2.0.1"
+    "title": "hero-flexible",
+    "version": "1.1.1"
   },
   "php": {
     "inc": [
-      "component-hero-background.php",
-      "component-hero-columns.php",
-      "component-hero-stack.php",
+      "component.php",
       "setup.php"
     ]
   },
   "css": {
     "main.css": [
-      "assets/styles/hero.scss",
-      "assets/styles/hero-background.scss",
-      "assets/styles/hero-columns.scss",
-      "assets/styles/hero-stack.scss"
+      "assets/styles/hero.scss"
     ],
     "admin.css": [],
     "editor-gutenberg.css": [
-      "assets/styles/hero.scss",
-      "assets/styles/hero-background.scss",
-      "assets/styles/hero-columns.scss",
-      "assets/styles/hero-stack.scss"
+      "assets/styles/hero.scss"
     ]
   },
   "js": {
-    "main.js": [],
+    "main.js": [
+      "assets/scripts/front-end.js"
+    ],
     "editor-gutenberg.js": []
-  },
-  "img": [],
-  "sprite": []
+  }
 }

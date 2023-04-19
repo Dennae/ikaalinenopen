@@ -6,20 +6,17 @@
  */
 
 /**
- * Get post types with hero block
- */
-function x_get_post_types_with_hero() {
-  return ['page'];
-}
-
-/**
  * Register image sizes
  */
 add_action('after_setup_theme', function() {
 
   add_image_size('hero_l', 2000, 750, true);  // hero @1,33x 3:1
-  add_image_size('hero_m', 1500, 500, true);  // hero @1x 3:1
+  add_image_size('hero_m', 1440, 640, true);  // hero @1x 9:4
   add_image_size('hero_s',  800, 500, true);  // hero mobile 8:5
+
+  add_image_size('hero_full_l', 2000, 1125, true);  // hero @1,33x 16:9
+  add_image_size('hero_full_m', 1440, 640,  true);  // hero @1x 9:4
+  add_image_size('hero_full_s',  800, 1000, true);  // hero mobile 8:5
 
 });
 
@@ -28,10 +25,22 @@ add_action('after_setup_theme', function() {
  */
 add_filter('theme_image_sizing', function($sizes) {
 
-  $sizes['hero'] = [
+  $sizes['hero-background'] = [
     'primary'    => 'hero_m',
     'supporting' => ['hero_l', 'hero_m', 'hero_s'],
     'sizes'      => '100vw'
+  ];
+
+  $sizes['hero-full'] = [
+    'primary'    => 'hero_full_l',
+    'supporting' => ['hero_full_l', 'hero_full_m', 'hero_full_s'],
+    'sizes'      => '100vw'
+  ];
+
+  $sizes['hero-columns'] = [
+    'primary'    => 'large',
+    'supporting' => ['full', 'wide_l', 'wide_m', 'large', 'medium'],
+    'sizes'      => '(min-width: 720px) 50vw, 100vw'
   ];
 
   return $sizes;
@@ -39,14 +48,24 @@ add_filter('theme_image_sizing', function($sizes) {
 });
 
 /**
+ * Action theme_hero if block was not used
+ */
+add_action('theme_hero', function () {
+  if (!has_block('acf/hero')) {
+    X_Hero::render();
+  }
+}, 100, 1);
+
+/**
  * Register block
  */
 add_action('acf/init', function () {
 
+  // Check function exists.
   if (function_exists('acf_register_block_type')) {
     acf_register_block_type([
       'name'              => 'hero',
-      'title'             => __('Hero'),
+      'title'             => 'Hero Flexible',
       'render_template'   => dirname(__FILE__) . '/block.php',
       'multiple'          => false,
       'keywords'          => ['header', 'title', 'hero'],
@@ -54,11 +73,10 @@ add_action('acf/init', function () {
       'icon'              => 'slides',
       'mode'              => 'preview',
       'align'             => 'full',
-      'post_types'        => x_get_post_types_with_hero(),
       'supports'          => [
-        'align'      => ['full'],
-        'mode'       => false,
-        'jsx'        => true,
+        'align'   => ['full', 'wide'],
+        'mode'    => false,
+        'jsx'     => true,
       ],
     ]);
   }
@@ -68,11 +86,9 @@ add_action('acf/init', function () {
 /**
  * Allow hero block
  */
-add_filter('allowed_block_types_all', function($blocks, $block_editor_context) {
+add_filter('allowed_block_types_all', function($blocks, $post) {
 
-  if ($block_editor_context->post instanceof WP_Post && in_array($block_editor_context->post->post_type, x_get_post_types_with_hero())) {
-    $blocks[] = 'acf/hero';
-  }
+  $blocks[] = 'acf/hero';
   return $blocks;
 
 }, 11, 2);
@@ -83,89 +99,24 @@ add_filter('allowed_block_types_all', function($blocks, $block_editor_context) {
  */
 add_action('init', function () {
 
-  foreach (x_get_post_types_with_hero() as $post_type) {
-    $post_type_object = get_post_type_object($post_type);
-    if ($post_type_object instanceof WP_Post_Type) {
-      $post_type_object->template = [
-        ['acf/hero'],
-        ['core/paragraph'],
-      ];
-    }
-  }
+  $post_type_object = get_post_type_object('page');
+  $post_type_object->template = [
+    ['acf/hero'],
+    ['core/paragraph'],
+  ];
 
 });
 
 /**
- * Load ACF fields
+ * Localization
  */
-add_filter('acf/settings/load_json', function ($paths) {
+add_filter('aucor_core_pll_register_strings', function($strings) {
 
-  $paths[] = dirname(__FILE__) . '/acf-json';
-  return $paths;
+  return array_merge($strings, [
+    'Title: Home'                       => 'Blogi',
+    'Title: Archives'                   => 'Arkisto',
+    'Title: Search'                     => 'Haku',
+    'Title: 404'                        => 'Hakemaasi sivua ei löytynyt',
+  ]);
 
-});
-
-/**
- * Copy hero image and/or title to post or other way around if empty
- *
- * @param int     $post_id the current post_id
- * @param WP_Post $post_obj the current post object
- * @param bool    $update is this update
- */
-add_action('save_post', function($post_id, $post_obj, $update) {
-
-  if (in_array(get_post_type($post_id), x_get_post_types_with_hero())) {
-
-    $blocks = parse_blocks($post_obj->post_content);
-
-    if (!empty($blocks) && is_array($blocks)) {
-      foreach ($blocks as $block) {
-        if (isset($block['blockName']) && $block['blockName'] === 'acf/hero') {
-
-          // copy block image into featured image if doesn't exist
-          if (!has_post_thumbnail($post_id)) {
-            if (isset($block['attrs']['data']['image']) && is_numeric($block['attrs']['data']['image'])) {
-              set_post_thumbnail($post_id, $block['attrs']['data']['image']);
-            }
-          }
-
-          // copy block title to post title or post title to block title
-          if (isset($block['innerBlocks']) && !empty($block['innerBlocks'])) {
-            foreach ($block['innerBlocks'] as $inner_block) {
-              if (isset($inner_block['blockName']) && $inner_block['blockName'] === 'core/heading' && isset($inner_block['innerHTML'])) {
-                $block_title = trim(wp_strip_all_tags($inner_block['innerHTML'], true));
-                // copy block title to post title if it is not set
-                if (empty($post_obj->post_title) && !empty($block_title)) {
-                  wp_update_post([
-                    'ID'          => $post_id,
-                    'post_title'  => $block_title,
-                    'post_name' => '', // force new slug
-                  ]);
-                }
-                // copy post title to block title if it is not set
-                if (empty($block_title) && !empty($post_obj->post_title)) {
-                  $content = $post_obj->post_content;
-                  $new_title_tag = str_replace('</h1>', $post_obj->post_title . '</h1>', $inner_block['innerHTML']);
-                  $modified_content = str_replace($inner_block['innerHTML'], $new_title_tag, $content);
-                  if ($content !== $modified_content) {
-                    wp_update_post([
-                      'ID'            => $post_id,
-                      'post_content'  => $modified_content,
-                    ]);
-                  }
-                }
-
-                break; // only check first heading of hero
-
-              }
-            }
-          }
-
-          break; // only check first occurance of hero
-
-        }
-      }
-    }
-  }
-
-}, 10, 3);
+}, 10, 1);

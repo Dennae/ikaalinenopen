@@ -1,35 +1,44 @@
 /* ==========================================================================
- # Hero (generic styles)
+ # Hero
 ========================================================================== */
 
 @import '../../../../assets/styles/utils.scss';
 
-$hero-breakpoint-s:  530px;
-$hero-breakpoint-m:  650px;
-$hero-breakpoint-l:  1120px;
+/* Variables
+----------------------------------------------- */
 
+$breakpoint-hero-s:  530px;
+$breakpoint-hero-m:  650px;
+$breakpoint-hero-l:  1120px;
+$breakpoint-hero-xl: 1600px;
+$breakpoint-hero-xxl: 2560px;
+
+:root {
+
+  // primary
+  --mobile-safe-vh-unit: 1vh;
+
+}
 
 /* Only back-end
 ----------------------------------------------- */
 
+.post-type-page .editor-post-title__input {
+  font-family: var(--font-default);
+  font-size: 1rem;
+  font-weight: var(--font-weight-normal);
+  padding: .75rem;
+  line-height: 1.25;
+  border-bottom: 1px solid rgba(0,0,0,.2);
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .block-editor [data-type="acf/hero"] {
 
-  max-width: none;
-  border: 1px solid transparent;
-  &:hover {
-    border: 1px dotted rgba(0,0,0,.33);
-  }
-  &.is-selected {
-    border: 1px solid transparent;
-  }
-
-  .hero--layout-stack {
-    padding-top: 1.5rem;
-  }
-
-  // show placeholder if video is not playing in editor
-  video {
-    background: rgba(0,0,0,.2);
+  .hero--layout-text.hero--background-transparent,
+  .hero--layout-columns.hero--background-transparent {
+    border: 2px dotted #ccc;
   }
 
 }
@@ -39,8 +48,19 @@ $hero-breakpoint-l:  1120px;
 
 .blocks .wp-block-hero {
 
+  &.alignwide {
+    // stretch full width on small screens
+    @include breakpoint($breakpoint-sub-m) {
+      margin-left: calc(-1 * var(--spacing-m));
+      margin-right: calc(-1 * var(--spacing-m));
+    }
+  }
+
   &.is-first-block {
     margin-top: 0;
+
+    // Notification & Breadcrumb Blocks need this.
+    margin-bottom: 0;
   }
 
   &.is-last-block {
@@ -53,38 +73,402 @@ $hero-breakpoint-l:  1120px;
 ----------------------------------------------- */
 
 .hero {
+  align-items: center;
+  display: flex;
   position: relative;
-  word-break: break-word;
+
+  &.is-light-mode {
+    h1, h2, h3, h4, h5, h6, p {
+      &, & a {
+        color: var(--color-primary) !important;
+      }
+    }
+  }
+  &.is-dark-mode {
+    h1, h2, h3, h4, h5, h6, p {
+      &, & a {
+        color: var(--color-white) !important;
+      }
+    }
+  }
+
+  &__container {
+    @include wrap;
+    margin: 0 auto;
+    @include breakpoint($breakpoint-m) {
+      .hero--layout-text &,
+      .hero--layout-background & {
+        padding-top: 6rem;
+        padding-bottom: 6rem;
+      }
+    }
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    position: relative;
+    z-index: 4;
+    &__inner {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+  }
 
   h1 {
-    margin: 0;
-    font-size: 2.75rem;
-    @include breakpoint($hero-breakpoint-s) {
-      font-size: 3rem;
-    }
-    @include breakpoint($hero-breakpoint-m) {
-      font-size: 4.25rem;
-    }
-    @include breakpoint($hero-breakpoint-l) {
+    margin-top: 0;
+    font-size: 2.5rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 48px;
+
+    @include breakpoint($breakpoint-hero-m) {
+      margin: 0;
       font-size: 4.5rem;
+      line-height: 64px;
+    }
+  }
+
+  h2 {
+    margin-top: 0;
+    font-size: 1.75rem;
+    line-height: 32px;
+    font-weight: 300;
+
+    @include breakpoint($breakpoint-hero-m) {
+      font-size: 2.45rem;
+      line-height: 64px;
     }
   }
 
   p {
-    margin: 1rem 0 0 0;
-    font-size: 1rem;
-    @include breakpoint($hero-breakpoint-s) {
-      margin-top: 1.5rem;
+    font-size: 1.5rem;
+    line-height: 32px;
+  }
+
+  &__meta {
+    margin-top: var(--spacing-s);
+  }
+
+  &__media {
+    &, img {
+      line-height: 0;
     }
-    @include breakpoint($hero-breakpoint-m) {
-      font-size: 1.125rem;
+    img {
+      width: 100%;
     }
   }
 
-  img
-  video {
+  /* Setting: align
+  ----------------------------------------------- */
+
+  &--align-left {
+    .hero__container__inner {
+      text-align: left;
+    }
+  }
+  &--align-center {
+    .hero__container__inner {
+      text-align: center;
+    }
+  }
+  &--align-right {
+    .hero__container__inner {
+      // text-align: right;
+    }
+  }
+
+  /* Layout: text
+  ----------------------------------------------- */
+
+  &--layout--text {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    .hero__container {
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
+    }
+
+    &.hero--align-left {
+      .hero__container__inner {
+        margin-left: 0;
+      }
+    }
+    &.hero--align-right {
+      .hero__container__inner {
+        margin-right: 0;
+      }
+    }
+
+
+  }
+
+  /* Setting: height
+  ----------------------------------------------- */
+
+  &--height-full {
+    min-height: 100vh;
+    min-height: calc(var(--mobile-safe-vh-unit, 1vh) * 100);
+  }
+
+  /* Setting: menu
+  ----------------------------------------------- */
+
+  &--menu-over {
+    padding-top: 5.5rem;
+  }
+
+  /* Layout: background
+  ----------------------------------------------- */
+
+  &--layout-background {
+
+    overflow: hidden;
+
+    &.hero--align-left {
+      .hero__container__inner {
+        margin-left: 0;
+      }
+    }
+    &.hero--align-right {
+      .hero__container__inner {
+        margin-right: 0;
+      }
+    }
+
+    .hero__media, .hero__media__image {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 0;
+    }
+
+    // min-height as aspect ratio but grow with the content
+    &:before {
+      content: '';
+      float: left;
+
+      // 8:5 for smaller screens
+      @include aspect-ratio(8, 5);
+
+      // 8:3 for middle size
+      @include breakpoint($breakpoint-hero-m) {
+        @include aspect-ratio(8, 3);
+      }
+
+      // 9:4 for bigger screens
+      @include breakpoint($breakpoint-hero-l) {
+        @include aspect-ratio(9, 4);
+      }
+
+      // 5:2 for wider screens
+      @include breakpoint($breakpoint-hero-xl) {
+        @include aspect-ratio(5, 2);
+      }
+
+      // 4:1 for wide screens
+      @include breakpoint($breakpoint-hero-xxl) {
+        @include aspect-ratio(3, 1);
+      }
+
+    }
+    &:after {
+      clear: left;
+      content: ' ';
+      display: table;
+    }
+    h1, p, span, a {
+      text-shadow: 0 0 1rem rgba(0,0,0,.6);
+      @include breakpoint($breakpoint-hero-s) {
+        text-shadow: 0 0 1rem rgba(0,0,0,.4);
+      }
+    }
+
+    .hero__media {
+      &__image {
+        line-height: 0;
+        img {
+          display: block;
+          line-height: 0;
+          z-index: 2;
+          position: absolute;
+
+          // proper way to cover
+          object-fit: cover;
+
+          // close enough cover for older browsers
+          min-width: 100%;
+          min-height: 100%;
+          transform: translate(-50%, -50%);
+          left: 50%;
+          top: 50%;
+
+
+        }
+
+      }
+      &__dimming {
+        display: block;
+        position: absolute;
+        line-height: 0;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 3;
+        background: linear-gradient(rgba(0,0,0,0.75), rgba(0, 0, 0, 1));
+
+      }
+    }
+
+
+  }
+
+  /* Layout: columns
+  ----------------------------------------------- */
+
+  &--layout-columns {
     display: block;
-    line-height: 0;
+    @include breakpoint($breakpoint-m) {
+      display: flex;
+      .alignwide & {
+        margin-top: 2rem;
+        &.background-color {
+          margin-top: 0;
+        }
+      }
+      .alignwide.is-last-block & {
+        margin-bottom: 2rem;
+      }
+    }
+    & > * {
+      @include breakpoint($breakpoint-m) {
+        flex-grow: 1;
+        flex-shrink: 0;
+        width: 50%;
+      }
+    }
+    &.hero--image-align-left {
+      @include breakpoint($breakpoint-m) {
+        .hero__container {
+          order: 2;
+        }
+        .hero__media {
+          order: 1;
+        }
+        .hero__container__inner {
+          margin-left: 0;
+          margin-right: auto;
+        }
+        &.hero--align-left .hero__container__inner {
+          margin-left: 0;
+          margin-right: auto;
+          text-align: left;
+        }
+        &.hero--align-right .hero__container__inner {
+          margin-left: auto;
+          margin-right: 0;
+          text-align: left;
+        }
+        &.hero--align-center .hero__container__inner {
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
+    }
+    &.hero--image-align-right {
+      @include breakpoint($breakpoint-m) {
+        .hero__container {
+          order: 1;
+        }
+        .hero__media {
+          order: 2;
+        }
+        .hero__container__inner {
+          margin-left: auto;
+          margin-right: 0;
+        }
+        &.hero--align-left .hero__container__inner {
+          margin-left: 0;
+          margin-right: auto;
+          text-align: left;
+        }
+        &.hero--align-right .hero__container__inner {
+          margin-left: auto;
+          margin-right: 0;
+          text-align: left;
+        }
+        &.hero--align-center .hero__container__inner {
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
+    }
+
+    .hero__container {
+      .alignwide & {
+        @include breakpoint($breakpoint-m) {
+          padding: 3rem;
+        }
+      }
+    }
+
+    .hero__media {
+      align-self: stretch;
+      display: flex;
+      align-items: stretch;
+      &__image {
+        align-items: stretch;
+        display: flex;
+        img {
+          object-fit: cover;
+        }
+      }
+    }
   }
 
+  &--height-auto {}
+  &--height-full {}
+
+
+  /* Layout: Stack
+  ----------------------------------------------- */
+  &--layout-stack {
+    width: 100%;
+    display: block;
+    .hero__container {
+      padding-bottom: 2rem;
+    }
+    .hero__media {
+      text-align: center;
+    }
+  }
+
+}
+
+ /* Layout on Child Pages
+  ----------------------------------------------- */
+.page-child {
+  .hero {
+    &--layout-background {
+      &:before {
+        // 8:3 for bigger screens
+        @include breakpoint($breakpoint-hero-l) {
+          @include aspect-ratio(8, 3);
+        }
+
+        // 80:27 for wider screens
+        @include breakpoint($breakpoint-hero-xl) {
+          @include aspect-ratio(80, 27);
+        }
+
+        // 128:27 for wide screens
+        @include breakpoint($breakpoint-hero-xxl) {
+          @include aspect-ratio(640, 211);
+        }
+      }
+
+    }
+
+  }
 }
