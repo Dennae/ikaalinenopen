@@ -11,9 +11,17 @@ class X_Logowall extends X_Component {
 
   public static function frontend($data) {
   ?>
+
     <?php if (!empty($data['items']) && !empty($data['items'][0])) : ?>
 
       <div <?php parent::render_attributes($data['attr']); ?>>
+
+        <?php if (!empty($data['logowall_title'])) : ?>
+          <div class="logowall__title">
+            <?php echo $data['logowall_title'] ?>
+          </div>
+        <?php endif; ?>
+
         <ul class="logowall__list columns--<?php echo $data['columns'] ?>">
           <?php 
             foreach ($data['items'] as $item) {
@@ -49,6 +57,10 @@ class X_Logowall extends X_Component {
     ];
 
     $args = wp_parse_args($args, $placeholders);
+
+    if (!empty(get_field('logowall_title'))) {
+      $args['logowall_title'] = get_field('logowall_title');
+    }
 
     if (!empty(get_field('logowall_columns'))) {
       $args['columns'] = get_field('logowall_columns');

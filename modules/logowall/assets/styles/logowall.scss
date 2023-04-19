@@ -6,13 +6,29 @@
 /* Variables
 ----------------------------------------------- */
 :root {
-  --logowall-columns-gap:  1rem;
+  --logowall-columns-gap:  2.5rem;
   --logowall-border-color: var(--color-grey-light);
 }
 
 /* Back-end & Front-end
 ----------------------------------------------- */
 .logowall {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  
+  &__title {
+    font-family: var(--font-title);
+    font-size: 2.5rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.333333;
+    text-align: center;
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+    @include breakpoint($breakpoint-s) {
+      margin-top: 2.5rem;
+    }
+  }
+
   &__list {
     @include list-reset;
     display: flex;
