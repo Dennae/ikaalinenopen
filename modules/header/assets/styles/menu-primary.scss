@@ -245,7 +245,9 @@
 
     // all <a>
     a {
-      color: var(--color-text);
+      font-family: var(--font-title);
+      color: var(--color-white);
+      text-transform: uppercase;
       text-decoration: none;
       flex-grow: 1;
     }
@@ -290,9 +292,9 @@
       // 1st level <a>
       & > span > a {
 
-        font-size: 1rem;
+        font-size: 1.25rem;
         @include breakpoint($breakpoint-l) {
-          font-size: 1.125rem;
+          font-size: 1.75rem;
         }
 
         &:hover, &:focus, &:active {
