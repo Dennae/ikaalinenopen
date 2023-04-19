@@ -7,11 +7,14 @@
 :root {
   --color-footer:       var(--color-white);
   --color-footer-bg:    var(--color-black);
+  --color-footer-accent: var(--color-primary-dark);
 }
 
 .site-footer {
   background: var(--color-footer-bg);
   padding: 3rem 0;
+  border-top: 2px solid  var(--color-footer-accent);
+
   @include breakpoint($breakpoint-m) {
     padding: 5rem 0;
   }
