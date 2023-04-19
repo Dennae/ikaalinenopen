@@ -62,29 +62,18 @@ add_filter('the_content', function ($content) {
 /**
  * Allow Iframe embeds and certain related attributes
  */
-add_filter( 'wp_kses_allowed_html', function () {
+add_filter('wp_kses_allowed_html', function ($allowed_tags) {
 
   $allowed_tags['iframe'] = array(
-		'align' => true,
 		'allow' => true,
 		'allowfullscreen' => true,
 		'class' => true,
 		'frameborder' => true,
-		'height' => true,
-		'id' => true,
-		'marginheight' => true,
-		'marginwidth' => true,
 		'name' => true,
 		'scrolling' => true,
 		'src' => true,
 		'style' => true,
-		'width' => true,
-		'allowFullScreen' => true,
-		'class' => true,
-		'frameborder' => true,
-		'height' => true,
 		'mozallowfullscreen' => true,
-		'src' => true,
 		'title' => true,
 		'webkitAllowFullScreen' => true,
 		'width' => true,
@@ -94,5 +83,4 @@ add_filter( 'wp_kses_allowed_html', function () {
   if ( current_user_can('administrator') ) {
     return $allowed_tags;  
   }
-
-}, 100 );
+}, 1 );
