@@ -1,66 +1,4 @@
-/* ==========================================================================
- # Background block
-========================================================================== */
-
 @import '../../../../assets/styles/utils.scss';
-
-/* Front-end and back-end
------------------------------------------------ */
-
-.block-editor [data-type="acf/background"],
-.blocks .wp-block-acf-background {
-  overflow: hidden;
-}
-
-/* Only front-end
------------------------------------------------ */
-
-.blocks .wp-block-acf-background {
-
-  & + .wp-block-acf-background.alignfull,
-  & + .wp-block-acf-media-text.alignfull {
-    @include negative-spacing-l(margin-top);
-  }
-
-  &.is-first-block {
-    margin-top: 0;
-  }
-  &.is-last-block {
-    margin-bottom: 0;
-  }
-
-  // entrance animation
-  &.has-viewport-effect {
-    &.is-in-viewport {
-    }
-  }
-
-}
-
-.blocks .wp-block-hero + .wp-block-acf-background,
-.blocks .wp-block-hero + .wp-block-acf-background {
-  @include negative-spacing-l(margin-top);
-}
-
-/* Only back-end
------------------------------------------------ */
-
-.block-editor {
-  [data-type="acf/background"] {
-    max-width: none !important;
-  }
-  [data-name="background_video"] {
-    .file-icon {
-      display: none;
-    }
-    .file-info {
-      margin-left: 0;
-    }
-  }
-}
-
-/* Component
------------------------------------------------ */
 
 .background {
   overflow: hidden;
@@ -74,6 +12,21 @@
   @include breakpoint($breakpoint-l) {
     padding-bottom: 6rem;
     padding-top: 6rem;
+  }
+
+  a:not(.c-button) {
+    @include link-reset;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      background: url(../images/arrow-right-blue.svg);
+      background-size: 1.5rem;
+      height: 1.5rem;
+      width: 1.5rem;
+      margin-right: 0.75rem;
+      vertical-align: middle;
+    }
   }
 
   // vertical align
@@ -100,9 +53,8 @@
   }
 
   // height
-  &.background--height-default {
+  &.background--height-default {}
 
-  }
   &.background--height-100 {
     min-height: 100vh;
     padding-top: 6rem;
@@ -118,12 +70,27 @@
     padding-top: 4rem;
     padding-bottom: 4rem;
   }
+  &.background--height-45 {
+    min-height: 45vh;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+  &.background--height-25 {
+    min-height: 25vh;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
 
   // colors
   &-color--none {
     background: transparent;
   }
 
+  &-color--blue {
+    .inner-blocks > * {
+      max-width: var(--width-l);
+    }
+  }
 
   // env
   &--env-editor {
@@ -134,8 +101,78 @@
 
   }
 
+  //icons
+  &--has-icons {
+    .inner-blocks > *:first-child {
+      position: relative;
+      z-index: 10;
+      max-width: var(--width-l);
+
+      @include breakpoint(max-width 599px) {
+        padding-top: 6rem;
+      }
+      &:before {
+        content: '';
+        background: url(../images/icons.svg);
+        background-size: 100%;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        background-repeat: no-repeat;
+        margin-right: 5rem;
+
+        @include breakpoint(600px) {
+          width: calc(50% - 3rem);
+        }
+      }
+    }
+  }
+
   &.is-dark-mode {
-    color: var(--color-white);
+    h1, h2, h3, h4, h5, h6 {
+      color: var(--color-white) !important;
+    }
+
+    h3, h4, h5, h6, a {
+      margin-bottom: .5rem;
+    }
+
+    li {
+      color: var(--color-white);
+      margin-top: .5rem;
+      margin-bottom: 0 !important;
+      padding: 0 !important;
+      font-size: 1.3125rem!important;
+      line-height: 30px!important;
+      font-weight: var(--font-weight-light)!important;
+
+      &:hover {
+        transform: translate3d(1px, 0, 1px) !important;
+      }
+
+      &::before {
+        content: "" !important;
+        padding-right: 0 !important;
+      }
+    }
+
+    p {
+      color: var(--color-white) !important;
+      margin-top: .5rem;
+      margin-bottom: .5rem;
+    }
+
+    a:not(.c-button) {
+      @include link-reset;
+      color: var(--color-white) !important;
+
+      &::before {
+        background: url(../images/arrow-right-white.svg) !important;
+      }
+    }
 
     &.background--type-image,
     &.background--type-video {
@@ -206,6 +243,33 @@
     @include child-margin-reset;
     width: 100%;
     position: relative;
+
+    .wp-block-paragraph {
+      font-size: 1.5rem;
+      line-height: 1.5;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: var(--font-weight-bold);
+      line-height: 48px;
+
+      @include breakpoint($breakpoint-m) {
+        font-size: 3.5rem;
+        line-height: 64px;
+      }
+    }
+
+    h2 {
+      font-size: 2.45rem;
+      line-height: 32px;
+      font-weight: var(--font-weight-bold);
+
+      @include breakpoint($breakpoint-m) {
+        line-height: 64px;
+      }
+    }
+
   }
 
   // content background

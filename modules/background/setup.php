@@ -37,7 +37,7 @@ add_action('acf/init', function () {
 add_action('after_setup_theme', function() {
 
   add_image_size('background_l',  2000, 1250, true);   // 16:10
-  add_image_size('background_m',  1600, 1000, true);   // 16:10
+  add_image_size('background_m',  1440, 576, true);    // 5:2
   add_image_size('background_s',   900,  900, true);   // 1:1
   add_image_size('background_xs',  600,  600, true);   // 1:1
 
@@ -144,7 +144,7 @@ add_filter('acf/load_field', function ($f) {
 /**
  * Allow block
  */
-add_filter('allowed_block_types_all', function($blocks, $block_editor_context) {
+add_filter('allowed_block_types_all', function($blocks, $post) {
 
   $blocks[] = 'acf/background';
   return $blocks;

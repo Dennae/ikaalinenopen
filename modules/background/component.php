@@ -15,14 +15,15 @@ class X_Background extends X_Component {
   public static function frontend($data) {
   ?>
 
-    <section <?php parent::render_attributes($data['attr']); ?>>
-      <?php if ($data['has_background']) : ?>
-          <div class="background__media js-background__media">
+    <div <?php parent::render_attributes($data['attr']); ?>>
+    <?php if ($data['has_background']) : ?>
+          <div class="background__media js-background__media" style="background-color:<?php echo esc_attr($data['background_blend_color']); ?>">
             <?php if ($data['type'] == 'image') : ?>
               <?php
               X_Image::render([
                 'id'       => $data['image_id'],
                 'size'     => 'background',
+                'attr'     => ['style' => 'mix-blend-mode: ' . $data['background_blend_mode']]
               ]);
               ?>
             <?php elseif ($data['type'] == 'video') : ?>
@@ -34,49 +35,52 @@ class X_Background extends X_Component {
                    * 2. Transparent poster is set for faster rendering
                    */
                 ?>
-                <video autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" width="800" height="450" poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+                <video autoplay loop muted playsinline width="800" height="450" poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
                   <source src="<?php echo esc_attr($data['video_url']); ?>" type="video/mp4">
                 </video>
               </div>
-            <?php endif; ?>
+          <?php endif; ?>
           <?php if ($data['dimming_opacity'] > 0) : ?>
             <div class="background__dimming" style="opacity:<?php echo esc_attr($data['dimming_opacity']); ?>%"></div>
           <?php endif; ?>
         </div>
-      <?php endif; ?>
+    <?php endif; ?>
 
       <div class="background__content inner-blocks">
         <?php echo $data['contents']; ?>
       </div>
 
-    </section>
-    <?php
+    </div>
+      <?php
   }
 
-  public static function backend($args = []) {
-
+  public static function backend($args = [])
+  {
     $placeholders = [
 
-      // required
-      'contents'                      => '',
-      'fields'                        => [],
+    // required
+    'contents'                      => '',
+    'fields'                        => [],
 
-      // optional
-      'attr'  => [],
+    // optional
+    'attr'  => [],
 
-      // internal
-      'is_editor'                    => false,
-      'is_dark_mode'                 => true,
-      'video_url'                    => null,
-      'image_id'                     => null,
-      'has_background'               => false,
-      'type'                         => 'color',
-      'dimming_opacity'              => 0
+    // internal
+    'is_editor'                    => false,
+    'is_dark_mode'                 => true,
+    'video_url'                    => null,
+    'image_id'                     => null,
+    'has_background'               => false,
+    'type'                         => 'color',
+    'dimming_opacity'              => 0,
+    'background_blend_mode'        => 'unset',
+    'background_blend_color'       => 'none',
+
     ];
 
     $args = wp_parse_args($args, $placeholders);
 
-    if (!isset($args['attr']['class'])) {
+  if (!isset($args['attr']['class'])) {
       $args['attr']['class'] = [];
     }
     $args['attr']['class'][] = 'background';
@@ -91,6 +95,36 @@ class X_Background extends X_Component {
     }
     $args['attr']['class'][] = 'background--type-' . $args['type'];
 
+    // icons
+    $icons = isset($f['background_icons']) ? $f['background_icons'] : null;
+    if (!empty($icons) && $icons) {
+      $args['attr']['class'][] = 'background--has-icons';
+    }
+
+    /**
+     * Background: Blend Mode
+     */
+
+    if (isset($f['background_blend_mode']) && !empty($f['background_blend_mode']) && $f['background_blend_mode'] !== 'unset') {
+      $blend_mode = $f['background_blend_mode'];
+
+      $args['attr']['class'][] = 'background-blend-' . $blend_mode;
+      $args['background_blend_mode'] = $blend_mode;
+
+      /**
+      * Background: Blend Color
+      */
+      
+      if (isset($f['background_blend_color']) && !empty($f['background_blend_color']) && $f['background_blend_color'] !== 'none') {
+        $blend_color = $f['background_blend_color'];
+
+        $args['attr']['class'][] = 'background-has-blend-color';
+        $args['background_blend_color'] = $blend_color;
+      } else {
+        $args['attr']['class'][] = 'background-has-blend-color--none';
+      }
+    }
+
     /**
      * Background: color
      */
@@ -104,44 +138,39 @@ class X_Background extends X_Component {
         $colors = apply_filters('x_background_colors', []);
         if (isset($colors[$f['background_color']]) && isset($colors[$f['background_color']]['is_dark'])) {
           $args['is_dark_mode'] = $colors[$f['background_color']]['is_dark'];
-        }
-      } else {
+          }
+        } else {
         $args['attr']['class'][] = 'background-color';
         $args['attr']['class'][] = 'background-color--none';
-      }
+        }
 
-    } elseif ($args['type'] === 'video' && !empty($f['background_video'])) {
+      } elseif ($args['type'] === 'video' && !empty($f['background_video'])) {
 
       $args['video_url'] = $f['background_video'];
       $args['has_background'] = true;
 
-    } elseif ($args['type'] == 'image') {
-
-      /**
-       * Background: image
-       */
-      $image_id = $f['background_image'];
-      if (!empty($image_id)) {
-        $args['image_id'] = $image_id;
-        $args['has_background'] = true;
+      } elseif ($args['type'] == 'image') {
+        /**
+         * Background: image
+         */
+    
+        if (!empty($f['background_image'])) {
+          $args['image_id'] = $f['background_image'];
+          $args['has_background'] = true;
+        }
       }
-
-    }
 
     /**
      * Dimming
      */
     if (in_array($args['type'], ['image', 'video'])) {
-
-      $dimming = $f['background_dimming'];
-
       $dimming_amount = 0;
+      
       if (isset($f['background_dimming']) && !empty($f['background_dimming'])) {
         $dimming_amount = (int) $f['background_dimming'];
       }
       $args['dimming_opacity'] = $dimming_amount;
-
-    }
+      }
 
     /**
      * Sizing
@@ -149,7 +178,7 @@ class X_Background extends X_Component {
     $min_height = isset($f['background_height']) ? $f['background_height'] : null;
     if (!empty($min_height) && is_string($min_height)) {
       $args['attr']['class'][] = 'background--height-' . $min_height;
-    }
+      }
 
     /**
      * Content position
@@ -157,7 +186,7 @@ class X_Background extends X_Component {
     $position = isset($f['background_content_align']) ? $f['background_content_align'] : null;
     if (empty($position) || !is_string($position)) {
       $position = 'middle';
-    }
+      }
     $args['attr']['class'][] = 'background--vertical-align-' . $position;
 
     /**
@@ -166,20 +195,20 @@ class X_Background extends X_Component {
     $has_content_background = isset($f['background_has_content_background']) ? $f['background_has_content_background'] : null;
     if (empty($has_content_background)) {
       $args['attr']['class'][] = 'background--content-background-none';
-    } else {
+      } else {
       $args['attr']['class'][] = 'background--content-background-light';
       $args['is_dark_mode'] = false;
-    }
+      }
 
     /**
      * Dark mode
      */
     if (isset($f['background_content_mode'])) {
       $manual_mode = $f['background_content_mode'];
-      if (is_string($manual_mode) && $manual_mode !== 'auto') {
-        $args['is_dark_mode'] = $manual_mode !== 'light';
-      }
+    if (is_string($manual_mode) && $manual_mode !== 'auto') {
+          $args['is_dark_mode'] = $manual_mode !== 'light';
     }
+      }
     $color_mode = $args['is_dark_mode'] ? 'is-dark-mode' : 'is-light-mode';
     $args['attr']['class'][] = $color_mode;
 
@@ -193,13 +222,12 @@ class X_Background extends X_Component {
      * Extra classes
      */
     if (isset($f['class'])) {
-      foreach ($f['class'] as $class) {
-        $args['attr']['class'][] = $class;
-      }
+    foreach ($f['class'] as $class) {
+          $args['attr']['class'][] = $class;
     }
+      }
 
     return $args;
 
   }
-
 }

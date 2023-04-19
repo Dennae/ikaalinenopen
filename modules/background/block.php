@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ACF Block: Background
  *
@@ -15,6 +16,7 @@ $allowed_blocks = [
   'acf/button',
   'acf/buttons',
   'acf/spacer',
+  'acf/media-text',
   'core/columns',
   'core/heading',
   'core/image',
@@ -23,6 +25,7 @@ $allowed_blocks = [
   'core/quote',
   'gravityforms/form',
 ];
+
 
 $placeholder_content = [
   ['core/heading', [
