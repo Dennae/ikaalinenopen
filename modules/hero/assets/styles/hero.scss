@@ -58,15 +58,15 @@ $hero-breakpoint-l:  1120px;
 
   h1 {
     margin: 0;
-    font-size: 1.75rem;
+    font-size: 2.75rem;
     @include breakpoint($hero-breakpoint-s) {
-      font-size: 2rem;
+      font-size: 3rem;
     }
     @include breakpoint($hero-breakpoint-m) {
-      font-size: 2.25rem;
+      font-size: 4.25rem;
     }
     @include breakpoint($hero-breakpoint-l) {
-      font-size: 2.5rem;
+      font-size: 4.5rem;
     }
   }
 
