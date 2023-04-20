@@ -122,9 +122,9 @@ $breakpoint-media-text-desktop:  min-width 920px;
       filter: grayscale(100%);
       transition: 0.5s;
 
-      &:hover {
-        filter: none;
-      }
+      // &:hover {
+      //   filter: none;
+      // }
     }
     &__video,
     &__image {
