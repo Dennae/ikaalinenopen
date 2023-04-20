@@ -53,6 +53,17 @@
     }
   }
 
+  .menu-item > .menu-item__link > a {
+    
+    &:hover {
+      color: var(--color-primary-dark);
+    }
+  }
+
+  .lang-item > .menu-item__link > a {
+    color: var(--color-primary-alt);
+  }
+
   /* Mobile navigation
   ----------------------------------------------- */
 
