@@ -54,6 +54,7 @@
   }
 
   .menu-item > .menu-item__link > a {
+    text-shadow: 2px 2px 2px black;
     
     &:hover {
       color: var(--color-primary-dark);
@@ -62,6 +63,10 @@
 
   .lang-item > .menu-item__link > a {
     color: var(--color-primary-alt);
+
+    &:hover {
+      color: var(--color-primary-dark);
+    }
   }
 
   /* Mobile navigation
