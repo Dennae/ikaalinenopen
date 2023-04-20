@@ -73,6 +73,18 @@
         font-size: 1rem;
         text-decoration: none;
         outline-offset: 0;
+
+        &:hover {
+          color: var(--color-link);
+        }
+      }
+
+      .lang-item > .menu-item__link > a {
+        color: var(--color-link);
+    
+        &:hover {
+          color: var(--color-primary-dark);
+        }
       }
 
       & > span {
@@ -177,7 +189,8 @@
 
       // 1st level <a>
       & > span > a {
-        font-size: 1.125rem;
+        font-size: 1.75rem;
+        font-weight: 900;
       }
 
         // 2nd level <ul class="sub-menu"> [closed]
