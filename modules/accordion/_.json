@@ -1,0 +1,30 @@
+{
+  "meta": {
+    "title": "accordion",
+    "version": "1.2.0"
+  },
+  "php": {
+    "inc": [
+      "component.php",
+      "setup.php",
+      "acf.php"
+    ]
+  },
+  "css": {
+    "main.css": [
+      "assets/styles/accordion.scss"
+    ],
+    "admin.css": [],
+    "editor-gutenberg.css": [
+      "assets/styles/accordion.scss"
+    ]
+  },
+  "js": {
+    "main.js": [
+      "assets/scripts/accordion.js"
+    ],
+    "editor-gutenberg.js": []
+  },
+  "img": [],
+  "sprite": []
+}

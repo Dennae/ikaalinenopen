@@ -1,0 +1,134 @@
+/* ==========================================================================
+ # Accordion
+========================================================================== */
+
+
+@import '../../../../assets/styles/utils.scss';
+
+/* Variables
+----------------------------------------------- */
+
+:root {
+  --accordion-icon-color:   var(--color-primary);
+  --accordion-border-color: var(--color-grey-light);
+}
+
+/* Front-end and back-end
+----------------------------------------------- */
+
+.wp-block-acf-accordion {
+
+  @include spacing(margin-top, margin-bottom);
+
+  .accordion {
+    position: relative;
+    border-top: 1px solid var(--accordion-border-color);
+    border-bottom: 1px solid var(--accordion-border-color);
+    &__header {
+      @include button-reset;
+      position: relative;
+      width: 100%;
+      &__title {
+        @include transition;
+        text-align: left;
+        width: 100%;
+        margin: 0 !important;
+        padding: var(--spacing-m) 0;
+        &.placeholder {
+          padding: var(--spacing-m);
+        }
+      }
+
+      &__icon {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: inherit;
+        right: 0;
+        display: flex;
+        align-items: center;
+        svg {
+          @include transition;
+          width: 2rem;
+          height: 2rem;
+          color: var(--accordion-icon-color);
+        }
+        .icon-minus {
+          display: none;
+        }
+      }
+    }
+    &__panel {
+      @include transition;
+      &__content {
+        @include child-margin-reset;
+        padding: 0 0 1.5rem 0;
+      }
+    }
+  }
+  // keep multiple accordions compact
+  & + .wp-block-acf-accordion {
+    @include negative-spacing(margin-top);
+    .accordion {
+      border-top: 0;
+    }
+  }
+}
+
+/* Front-end only
+----------------------------------------------- */
+
+.blocks .wp-block-acf-accordion {
+  .accordion {
+    position: relative;
+    &__header {
+      &[aria-expanded=true] {
+        .accordion__header {
+          &__title {
+            color: var(--color-primary);
+          }
+          &__icon {
+            .icon-minus {
+              display: block;
+            }
+            .icon-plus {
+              display: none;
+            }
+          }
+        }
+
+      }
+    }
+    &__panel {
+      display: none;
+      &[aria-hidden=false] {
+        display: block;
+      }
+    }
+  }
+}
+
+
+
+/* Back-end only
+----------------------------------------------- */
+
+.block-editor .wp-block-acf-accordion {
+
+  .accordion {
+    border: 1px dashed var(--accordion-border-color);
+    &__header {
+      &__title {
+        @include spacing(padding-left, padding-right);
+      }
+      &__icon {
+        right: var(--spacing-m) !important;
+      }
+    }
+    &__panel {
+      @include spacing(padding-left, padding-right);
+    }
+  }
+
+}
+
