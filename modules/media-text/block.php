@@ -20,7 +20,8 @@ $allowed_blocks = [
   'core/columns',
   'acf/buttons',
   'acf/button',
-  'acf/spacer'
+  'acf/spacer',
+  'acf/accordion',
 ];
 
 $placeholder_content = [
