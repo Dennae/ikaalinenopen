@@ -44,7 +44,7 @@
 
   // --font-default: "Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
   // --font-title: "Bebas Kai";
-  --font-title: "Bebas Kai";
+  --font-title: "Bebas Kai", sans-serif;
   --font-default: "Montserrat", sans-serif;
 
   /* Import Fonts Locally
@@ -53,7 +53,9 @@
   @font-face {
     font-family:"Bebas Kai";
     font-weight: 400;
-    src:url("../fonts/BebasKai_regular.woff2") format("woff2"),url("../fonts/BebasNeue_regular.woff") format("woff");
+    src:url("../dist/fonts/BebasKai_regular.woff2") format("woff2"),url("../dist/fonts/BebasKai_regular.woff") format("woff"),
+    url("../dist/fonts/BebasKai_regular.ttf") format("truetype"),
+    url("../dist/fonts/BebasKai_regular.otf") format("opentype");
   }
 
   /* Spacing
