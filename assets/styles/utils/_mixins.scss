@@ -79,6 +79,9 @@
 
   display: block;
   font-family: var(--font-title);
+  font-style: normal;
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
 
   @if ($size == xl) {
 
@@ -86,7 +89,6 @@
     @include breakpoint($breakpoint-s) {
       font-size: 3.5rem;
     }
-    font-weight: var(--font-weight-bold);
     line-height: 1.125;
 
   } @else if ($size == l) {
