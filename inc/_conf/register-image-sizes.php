@@ -20,12 +20,12 @@ add_action('after_setup_theme', function() {
     [
       'name' => 'medium',
       'w'    => 400,
-      'h'    => 700,
+      'h'    => 720,
     ],
     [
       'name' => 'large',
-      'w'    => 800,
-      'h'    => 1400,
+      'w'    => 1280,
+      'h'    => 960,
     ]
   ];
 
