@@ -22,6 +22,7 @@ $allowed_blocks = [
   'acf/button',
   'acf/spacer',
   'acf/accordion',
+  'acf/file',
 ];
 
 $placeholder_content = [
