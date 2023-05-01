@@ -76,8 +76,6 @@
 ----------------------------------------------- */
 
 @mixin heading($size: m) {
-
-  display: block;
   font-family: var(--font-title);
   font-style: normal;
   font-weight: var(--font-weight-bold);
