@@ -48,7 +48,8 @@
             },
             "choices": {
                 "default": "Oletus",
-                "light": "Light"
+                "light": "Vaalea",
+                "blue": "Sininen"
             },
             "default_value": "default",
             "allow_null": 0,
@@ -57,6 +58,25 @@
             "return_format": "value",
             "ajax": 0,
             "placeholder": ""
+        },
+        {
+            "key": "field_612f753c57b30",
+            "label": "Käytä tausta ikoneita",
+            "name": "background_icons",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
         },
         {
             "key": "field_5f05b451471c1",
@@ -80,7 +100,7 @@
                 "id": ""
             },
             "return_format": "id",
-            "preview_size": "full",
+            "preview_size": "large",
             "library": "all",
             "min_width": "",
             "min_height": "",
@@ -146,6 +166,80 @@
             "append": ""
         },
         {
+            "key": "field_60f6d8fc98421",
+            "label": "Sekoitetila",
+            "name": "background_blend_mode",
+            "type": "select",
+            "instructions": "Valitse sekoitetila.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "unset": "Unset",
+                "multiply": "Multiply",
+                "screen": "Screen",
+                "overlay": "Overlay",
+                "darken": "Darken",
+                "lighten": "Lighten",
+                "color-dodge": "Color Dodge",
+                "color-burn": "Color Burn",
+                "hard-light": "Hard Light",
+                "soft-light": "Soft Light",
+                "difference": "Difference",
+                "hue": "Hue",
+                "saturation": "Saturation",
+                "color": "Color",
+                "luminosity": "Luminosity"
+            },
+            "default_value": false,
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 1,
+            "ajax": 1,
+            "return_format": "value",
+            "placeholder": ""
+        },
+        {
+            "key": "field_60f17bbbf95ee",
+            "label": "Sekoitetilan väri",
+            "name": "background_blend_color",
+            "type": "select",
+            "instructions": "Valitse väri sekoitetilalle.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_60f6d8fc98421",
+                        "operator": "!=",
+                        "value": "unset"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "#E4218B": "Solid Red",
+                "rgba(228, 33, 139, 0.5)": "Light Red",
+                "#27AD5A": "Solid Green",
+                "#009ADC": "Solid Blue",
+                "none": "No Color"
+            },
+            "default_value": false,
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 1,
+            "ajax": 1,
+            "return_format": "value",
+            "placeholder": ""
+        },
+        {
             "key": "field_5f23ec6f07930",
             "label": "Korkeus",
             "name": "background_height",
@@ -160,6 +254,8 @@
             },
             "choices": {
                 "none": "Oletus",
+                "25": "25%",
+                "45": "45%",
                 "50": "50%",
                 "75": "75%",
                 "100": "100%"
@@ -231,8 +327,8 @@
             },
             "choices": {
                 "auto": "Oletus",
-                "dark": "Light",
-                "light": "Dark"
+                "dark": "Vaalea",
+                "light": "Tumma"
             },
             "allow_null": 0,
             "default_value": "auto",
@@ -288,6 +384,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "show_in_rest": 0,
-    "modified": 1681905685
+    "modified": 1630500274
 }
