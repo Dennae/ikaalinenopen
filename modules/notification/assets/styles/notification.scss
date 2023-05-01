@@ -17,7 +17,8 @@
     display: flex;
     justify-content: center;
     max-height: 7rem;
-    padding: 0.3125rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
 
     &__content {
       max-width: var(--width-m);
