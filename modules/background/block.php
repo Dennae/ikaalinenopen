@@ -24,6 +24,7 @@ $allowed_blocks = [
   'core/paragraph',
   'core/quote',
   'gravityforms/form',
+  'acf/logo-wall',
 ];
 
 
