@@ -16,6 +16,7 @@ $allowed_blocks = [
   'core/image',
   'core/gallery',
   'acf/accordion',
+  'acf/file',
 ];
 
 $placeholder_content = [
