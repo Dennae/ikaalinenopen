@@ -11,9 +11,9 @@
  *   classic images without caption and with left or right align
  */
 const lightboxesInContent = () => {
-  var imgItems = document.querySelectorAll('.blocks-gallery-item > figure > a, .gallery-item > .gallery-icon > a, .wp-block-image a, p > a > img, p > a > .wp-block-image');
+  var imgItems = document.querySelectorAll('.blocks-gallery-item > figure > a, .gallery-item > .gallery-icon > a, .wp-block-image a, p > a > img, p > a > .wp-block-image');
   // if found, add .lightbox class that Tobi uses as selector to the items
-  if (imgItems.length) {
+  if (imgItems.length) {
     for (let i = 0; i < imgItems.length; i++) {
       let item = imgItems[i];
       var formats = ['.jpg', '.png', '.jpeg', '.gif'];
@@ -52,7 +52,7 @@ lightboxesInContent();
 document.addEventListener('DOMContentLoaded', () => {
   if (document.querySelectorAll('.lightbox').length > 0) {
     try {
-      new Tobi({
+      new Tobi({
         navLabel: [theme_strings_lightbox.prev, theme_strings_lightbox.next],
         closeLabel: theme_strings_lightbox.close,
         loadingIndicatorLabel: theme_strings_lightbox.loading,
